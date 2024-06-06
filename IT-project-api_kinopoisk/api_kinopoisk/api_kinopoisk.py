@@ -1,10 +1,10 @@
 
 import requests
 import json
-
+from my_token import my_token_
 headers = {
     "accept": "application/json",
-    "X-API-KEY": '5J5BGMF-KN14VC9-HW608YR-W4A3P7X'
+    "X-API-KEY": my_token_
 }
 
 
