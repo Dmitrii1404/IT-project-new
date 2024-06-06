@@ -1,0 +1,148 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+{% block title %} {{ movie.name }} {% endblock title %}
+{% block container %}
+    <div class="container py-md-3">
+{% endblock container %}
+
+{% block sidebar %}
+    <div class="side-bar col-lg-4">
+{% endblock sidebar %}
+
+{% block movie2 %}
+    <div class="left-ads-display col-lg-8">
+        <div class="row">
+            <div class="desc1-left col-md-6">
+                <img src="{{ movie2.poster.url }}" class="img-fluid" alt="{{ movie2.name }}">
+            </div>
+            <div class="desc1-right col-md-6 pl-lg-4">
+                <h3 class="editContent">
+                    {{ movie2.name }}
+                </h3>
+                <ul>
+                    <li style="list-style: none">
+                        <span><b>Год:</b> {{ movie2.year }}</span></li>
+                    <li style="list-style: none">
+                        <span><b>Страна:</b> {{ movie2.countries|join:", " }}</span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Слоган:</b> {{ movie2.slogan }}</span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Режиссер:</b> {{ movie2.directors|join:", " }}</span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Актеры:</b> {{ movie2.actors|join:", " }}</span>
+                    </li>
+                    <li style="list-style: none">
+                        <span><b>Жанр:</b> {{ movie2.genres|join:", " }}</span>
+                    </li>
+                    <li>
+                        <span><b>Премьера в мире:</b> {{ movie2.premiereWorld }}</span>
+                    </li>
+                    <li>
+                        <span><b>Бюджет:</b> ${{ movie2.budget }}</span></li>
+                    <li>
+                        <span><b>Сборы в США:</b> ${{ movie2.feesInUSA }}</span></li>
+                    <li>
+                        <span><b>Сборы в мире:</b> ${{ movie2.feesInWorld }}</span>
+                    </li>
+                    <li>
+                        <form action="{% url 'add_rating' %}" method="post" name="rating">
+                            <b>Рейтинг:</b>
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ movie2.id }}" name="movie">
+                            <span class="rating">
+                                {% for k, v in star_form.fields.star.choices %}
+                                    <input id="rating{{ v }}" type="radio" name="star"
+                                           value="{{ k }}">
+                                    <label for="rating{{ v }}">{{ k }}</label>
+                                {% endfor %}
+                            </span>
+                            <span class="editContent">{{ movie2.rating }}</span>
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="share-desc">
+                    <div class="share">
+                        <h4 class="editContent">
+                            Share:</h4>
+                        <ul class="w3layouts_social_list list-unstyled">
+                            <li>
+                                <a href="#" class="w3pvt_facebook editContent">
+                                    <span class="fa fa-facebook-f"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="w3pvt_twitter editContent">
+                                    <span class="fa fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="w3pvt_facebook editContent">
+                                    <span class="fa fa-vk"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row sub-para-w3layouts mt-5">
+
+            <h3 class="shop-sing editContent">
+                О фильме {{ movie2.name }}
+            </h3>
+            <p>
+                {% for image in movie2.shots %}
+                    <img src="{{ image }}" class="img-movie-shots " alt="{{ movie2.name }}">
+                {% endfor %}
+            </p>
+            <p class="editContent">
+                {{ movie2.description|safe }}
+            </p>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="single-form-left">
+                <!--  //contact form grid ends here -->
+            </div>
+        </div>
+        {% for review in movie.get_review %}
+            <div class="media py-5">
+                <img src="{% static 'images/te2.jpg' %}" class="mr-3 img-fluid" alt="image">
+                <div class="media-body mt-4">
+                    <h5 class="mt-0 editContent">
+                        {{ review.name }}
+                    </h5>
+                    <p class="mt-2 editContent">
+                        {{ review.text }}
+                    </p>
+                    <a href="#formReview"
+                       onclick="addReview('{{ review.name }}', '{{ review.id }}')">Ответить</a>
+                    {% for rew in review.reviews_set.all %}
+                        <div class="media mt-5 editContent">
+                            <a class="pr-3" href="#">
+                                <img src="{% static 'images/te2.jpg' %}" class="img-fluid "
+                                     alt="image">
+                            </a>
+                            <div class="media-body">
+                                <h5 class="mt-0 editContent">{{ rew.name }}</h5>
+                                <p class="mt-2 editContent">{{ rew.text }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        function addReview(name, id) {
+            document.getElementById("contactparent").value = id;
+            document.getElementById("contactcomment").innerText = `${name}, `
+        }
+
+    </script>
+{% endblock movie2 %}

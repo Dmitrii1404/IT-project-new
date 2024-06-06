@@ -1,0 +1,36 @@
+# poetry update чтобы установить зависимости
+
+[tool.poetry]
+name = "it-project"
+version = "0.1.0"
+description = ""
+authors = ["Denis Borisov <mai.borisov.denis@gmail.com>"]
+readme = "README.md"
+
+# Зависимости при запуске проекта
+# Чтобы добавить модуль: poetry add pandas
+[tool.poetry.dependencies]
+python = "^3.10"
+
+pre-commit = "^3.7.0"
+requests = "^2.31.0"
+types-requests = "^2.31.0.20240406"
+selenium = "^4.19.0"
+django = "^5.0.5"
+django-ckeditor = "^6.7.1"
+beautifulsoup4 = "^4.12.3"
+fake-useragent = "^1.5.1"
+aiohttp = "^3.9.5"
+pillow = "^10.3.0"
+[tool.poetry.dev-dependencies]
+
+# Версии линтера
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.1.0"
+black = "^24.4.1"
+mypy = "^1.10.0"
+toml-sort = "^0.23.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Спроис у GigaChat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        .chat-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .message-history {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        .message-history .message {
+            margin-bottom: 10px;
+        }
+        .message-history .message.user {
+            text-align: right;
+        }
+        .message-history .message.user .content {
+            background-color: #d1ecf1;
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 15px;
+        }
+        .message-history .message.gigachat .content {
+            background-color: #f8d7da;
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 15px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .chat-container button {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Спроси у Gigachat</h1>
+        <div class="message-history" id="message-history">
+            <!-- Здесь будут отображаться прошлые сообщения -->
+        </div>
+        <form id="chat-form">
+            <div class="form-group">
+                <label for="message">Enter your message:</label>
+                <input type="text" id="message" name="message" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            function addMessage(role, content) {
+                const messageClass = role === 'user' ? 'user' : 'gigachat';
+                $('#message-history').append('<div class="message ' + messageClass + '"><div class="content">' + content + '</div></div>');
+                $('#message-history').scrollTop($('#message-history')[0].scrollHeight);
+            }
+
+            $('#chat-form').on('submit', function(event) {
+                event.preventDefault();
+                const message = $('#message').val();
+                addMessage('user', message);  // Добавить сообщение пользователя в историю
+                $.ajax({
+                    url: '{% url "get_response" %}',
+                    type: 'POST',
+                    data: {
+                        'message': message,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        addMessage('gigachat', data.response);  // Добавить ответ GigaChat в историю
+                        $('#message').val('');  // Очистить поле ввода
+                    },
+                    error: function() {
+                        addMessage('gigachat', 'An error occurred.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
