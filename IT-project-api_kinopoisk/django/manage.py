@@ -10,8 +10,7 @@ def main():
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
-        raise ImportError('lolError'
-        ) from exc
+        raise ImportError("lolError") from exc
     execute_from_command_line(sys.argv)
 
 

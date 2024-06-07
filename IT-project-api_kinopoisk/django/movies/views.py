@@ -136,10 +136,9 @@ import json
 
 class APISearch(View):
 
-
     headers = {
         "accept": "application/json",
-        "X-API-KEY": "5J5BGMF-KN14VC9-HW608YR-W4A3P7X"
+        "X-API-KEY": "5J5BGMF-KN14VC9-HW608YR-W4A3P7X",
     }
 
     def search_by_name(self, name_, page=1, limit=10):
@@ -158,13 +157,17 @@ class APISearch(View):
             data = self.search_by_name(query, page=page)
             movies = data.get("docs", [])
             page_info = data.get("page", {})
-            has_next = page_info.get("hasNext", False) if isinstance(page_info, dict) else False
+            has_next = (
+                page_info.get("hasNext", False)
+                if isinstance(page_info, dict)
+                else False
+            )
 
             context = {
                 "movies": movies,
                 "query": query,
                 "page": page,
-                "has_next": has_next
+                "has_next": has_next,
             }
             return render(request, "movies/api_search.html", context)
         return render(request, "movies/api_search.html")
@@ -173,10 +176,11 @@ class APISearch(View):
 import requests
 import json
 
+
 class MovieDetail(View):
     headers = {
         "accept": "application/json",
-        "X-API-KEY": "5J5BGMF-KN14VC9-HW608YR-W4A3P7X"
+        "X-API-KEY": "5J5BGMF-KN14VC9-HW608YR-W4A3P7X",
     }
 
     def get_movie_details(self, movie_id):
@@ -186,7 +190,5 @@ class MovieDetail(View):
 
     def get(self, request, movie_id, *args, **kwargs):
         movie = self.get_movie_details(movie_id)
-        context = {
-            "movie": movie
-        }
+        context = {"movie": movie}
         return render(request, "movies/movie_detail2.html", context)

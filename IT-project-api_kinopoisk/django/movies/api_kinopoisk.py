@@ -1,11 +1,7 @@
-
 import requests
 import json
 
-headers = {
-    "accept": "application/json",
-    "X-API-KEY": '5J5BGMF-KN14VC9-HW608YR-W4A3P7X'
-}
+headers = {"accept": "application/json", "X-API-KEY": "5J5BGMF-KN14VC9-HW608YR-W4A3P7X"}
 
 
 # Самое главное, в фильтрах можно исключать категории "movies" - значит искать фильмы
@@ -61,7 +57,9 @@ def search_by_id(id_):
     except:
         budget = None
 
-    watchability = []  # где смотреть кинопоиск, иви и тд, тут название ресурса, его логотип и ссылка на фильм от туда
+    watchability = (
+        []
+    )  # где смотреть кинопоиск, иви и тд, тут название ресурса, его логотип и ссылка на фильм от туда
     for i in range(len(info["watchability"]["items"])):
         watchability.append(info["watchability"]["items"][i])  # name, logo -> url, url
 
@@ -101,7 +99,8 @@ def search_by_name(name_, page=1, limit=250):
             countries.append(info["docs"][i]["countries"][j]["name"])
 
         id_ = info["docs"][i][
-            "id"]  # Этот id нужен, для того, чтоб потом открыть всю инфу о фильме с помощью первой функции в этом коде
+            "id"
+        ]  # Этот id нужен, для того, чтоб потом открыть всю инфу о фильме с помощью первой функции в этом коде
         type_ = info["docs"][i]["type"]
         description = info["docs"][i]["description"]
         poster_full = info["docs"][i]["poster"]["url"]
@@ -156,8 +155,20 @@ def any_list(name_, page=1, limit=250):
 
 
 # Здесь поиск по фильтрам, выводится список подходящих фильмов/сериалов
-def search_by_filters(sort_field=None, sort_type=None, type_=None, year=None, rating_kp=None, votes_kp=None,
-                      age_rating=None, genres_name=None, is_series=None, countries_name=None, page=1, limit=250):
+def search_by_filters(
+    sort_field=None,
+    sort_type=None,
+    type_=None,
+    year=None,
+    rating_kp=None,
+    votes_kp=None,
+    age_rating=None,
+    genres_name=None,
+    is_series=None,
+    countries_name=None,
+    page=1,
+    limit=250,
+):
     # Если не заполнять фильтр, то его значение банально не будет учитываться
     # результат определяется только по заполненным фильтрам
     # Виды фильтров:
@@ -177,16 +188,18 @@ def search_by_filters(sort_field=None, sort_type=None, type_=None, year=None, ra
     # пример вызова функции: search_by_filters(sort_field="name", rating_kp="8-10", year="2000")
 
     a = []
-    a.append(('sortField=' + str(sort_field)) if sort_field != None else None)
-    a.append(('sortType=' + str(sort_type)) if sort_type != None else None)
-    a.append(('type=' + str(type_)) if type_ != None else None)
-    a.append(('year=' + str(year)) if year != None else None)
-    a.append(('votes.kp=' + str(rating_kp)) if rating_kp != None else None)
-    a.append(('sortField=' + str(votes_kp)) if votes_kp != None else None)
-    a.append(('ageRating=' + str(age_rating)) if age_rating != None else None)
-    a.append(('genres.name=' + str(genres_name)) if genres_name != None else None)
-    a.append(('isSeries=' + str(is_series)) if is_series != None else None)
-    a.append(('countries.name=' + str(countries_name)) if countries_name != None else None)
+    a.append(("sortField=" + str(sort_field)) if sort_field != None else None)
+    a.append(("sortType=" + str(sort_type)) if sort_type != None else None)
+    a.append(("type=" + str(type_)) if type_ != None else None)
+    a.append(("year=" + str(year)) if year != None else None)
+    a.append(("votes.kp=" + str(rating_kp)) if rating_kp != None else None)
+    a.append(("sortField=" + str(votes_kp)) if votes_kp != None else None)
+    a.append(("ageRating=" + str(age_rating)) if age_rating != None else None)
+    a.append(("genres.name=" + str(genres_name)) if genres_name != None else None)
+    a.append(("isSeries=" + str(is_series)) if is_series != None else None)
+    a.append(
+        ("countries.name=" + str(countries_name)) if countries_name != None else None
+    )
 
     filters = [i for i in a if i != None]
     url = f"https://api.kinopoisk.dev/v1.4/movie/search?page={page}&limit={limit}&{'&'.join(filters)}"
