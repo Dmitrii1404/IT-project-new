@@ -4,6 +4,7 @@ import json
 import requests
 from django.shortcuts import render
 from django.http import JsonResponse
+from giga_token import auth, client_id, secret
 
 
 def get_token(auth_token, scope="GIGACHAT_API_PERS"):
@@ -60,10 +61,7 @@ def get_chat_completion(auth_token, user_message):
 
 
 def send_request(message: str):
-    auth = "OWIwODRlYzAtMzMzNS00YmE0LTg0M2ItMzgzMmMxMDY3NDY0OjM5NmZlZTNhLThmY2EtNDE2Yy1iNjM0LWNiYjY0OWFiNGU0Ng=="
-    client_id = "9b084ec0-3335-4ba4-843b-3832c1067464"
     scope = "GIGACHAT_API_PERS"
-    secret = "396fee3a-8fca-416c-b634-cbb649ab4e46"
     credentials = f"{client_id}:{secret}"
     encoded_credentials = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
     response = get_token(encoded_credentials)
