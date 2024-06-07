@@ -52,7 +52,9 @@
 8. Переходите по url адресу
 
 # Доска с архитектурой проекта
-[Miro]() 
+[Miro](https://miro.com/app/board/uXjVK-J065o=/) 
+![image](https://github.com/Dmitrii1404/IT-project-new/assets/144604875/5eec99c4-6310-43d9-986f-3f3327a9a191)
+
 
 # Трекер задач 
 [Notion](https://www.notion.so/bd793c4221284e228ae5a3846eb33be8?v=591e20ba10374947b63632ed507a48d9)
