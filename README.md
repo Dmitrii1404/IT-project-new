@@ -17,11 +17,11 @@
 # Функционал сайта
 
 * Осуществление регистрации, входа и выхода из аккаунта.
+![image](https://github.com/gorilli4/IT-project-new/assets/145994444/59a014f1-1f49-49e7-91a5-8d6bacc819c4)
+
 
 * Кнопка "ГЛАВНАЯ", позволяющая при нажатии вернуться на главную страницу сайта.
-
-![image](https://github.com/Dmitrii1404/IT-project/assets/145994444/a951b235-a3d7-4d73-b911-c4c14ed74afc)
-  
+![image](https://github.com/gorilli4/IT-project-new/assets/145994444/3a07d107-56d1-49a5-9b62-3bf86b67f7fc)
 
 * Поисковая строка для поиска фильма по названию с помощью api kinopoisk.
 
@@ -31,8 +31,7 @@
   
 
 * При нажатии на интересующее пользователя произведение открывается страница с информацией о фильме, такой как год выпуска, страна выпуска, режиссер и так далее.
-  ![image](https://github.com/Dmitrii1404/IT-project/assets/145994444/f5fe0e52-137c-46ab-a304-3566bb78495c)
-
+ ![image](https://github.com/gorilli4/IT-project-new/assets/145994444/dbaaac62-adaa-474f-b762-1caeba8e013e)
 
 * Система написания комментария к фильму, путем заполнения нескольких окон: непосредственно комментария, имени и почты.
   ![image](https://github.com/Dmitrii1404/IT-project/assets/145994444/493e82f6-cde5-4fdc-b615-273806cdb601)
